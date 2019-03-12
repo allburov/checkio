@@ -5,12 +5,12 @@
 # 
 # END_DESC
 
+
 def two_teams(sailors):
-    # replace this for solution
-    return [
-        [],
-        []
-    ]
+    crew = lambda fn: sorted(x for x, y in filter(fn, sailors.items()))
+    middle = crew(lambda x: 20 <= x[1] <= 40)
+    older = crew(lambda x: x[1] > 40 or x[1] < 20)
+    return [older, middle]
 
 
 if __name__ == '__main__':
