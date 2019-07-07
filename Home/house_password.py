@@ -5,17 +5,27 @@
 # 
 # END_DESC
 
+import string
+
+
 def checkio(data: str) -> bool:
+    strong = all([
+        len(data) >= 10,  # len
+        set(string.ascii_uppercase) & set(data),  # Upper
+        set(string.ascii_lowercase) & set(data),  # Lower
+        set(string.digits) & set(data)  # Digit
+    ])
 
-    #replace this for solution
-    return True or False
+    # replace this for solution
+    return strong
 
-#Some hints
-#Just check all conditions
+
+# Some hints
+# Just check all conditions
 
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    # These "asserts" using only for self-checking and not necessary for auto-testing
     assert checkio('A1213pokl') == False, "1st example"
     assert checkio('bAse730onE4') == True, "2nd example"
     assert checkio('asasasasasasasaas') == False, "3rd example"

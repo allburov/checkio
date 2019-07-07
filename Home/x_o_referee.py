@@ -24,8 +24,30 @@
 
 from typing import List
 
+
+def get(result, rc):
+    i, j = rc
+    return result[i][j]
+
+
 def checkio(game_result: List[str]) -> str:
-    return "D" or "X" or "O"
+    checked = []
+    # row
+    checked.extend([[(i, j) for i in (0, 1, 2)] for j in (0, 1, 2)])
+    # column
+    checked.extend([[(j, i) for i in (0, 1, 2)] for j in (0, 1, 2)])
+
+    # диагональ
+    checked.extend([
+        [(0, 0), (1, 1), (2, 2)],
+        [(2, 0), (1, 1), (0, 2)],
+    ])
+    for check in checked:
+        if get(game_result, check[0]) == get(game_result, check[1]) == get(game_result, check[2]):
+            if get(game_result, check[0]) in "XO":
+                return get(game_result, check[0])
+    return "D"
+
 
 if __name__ == '__main__':
     print("Example:")
@@ -33,7 +55,7 @@ if __name__ == '__main__':
                    "XX.",
                    "XOO"]))
 
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    # These "asserts" using only for self-checking and not necessary for auto-testing
     assert checkio([
         "X.O",
         "XX.",
