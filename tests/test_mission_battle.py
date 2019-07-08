@@ -123,6 +123,18 @@ def test_battle_smoke():
     assert battle.fight(army_3, army_4) == False
 
 
+def test_army_battles_example():
+    army_1 = Army()
+    army_2 = Army()
+    army_1.add_units(Warrior, 1)
+    army_1.add_units(Knight, 2)
+    army_2.add_units(Warrior, 2)
+    army_2.add_units(Warrior, 1)
+    battle = Battle()
+    result = battle.fight(army_1, army_2)
+    assert result is True
+
+
 def test_from_task_13():
     army_1 = Army()
     army_2 = Army()

@@ -17,9 +17,7 @@
 # Taken from mission The Warriors
 
 
-import itertools
-
-from typing import NamedTuple, Type, List
+from typing import Type, List
 
 
 class Unit(object):
@@ -34,8 +32,11 @@ class Unit(object):
         self.defence = getattr(self, 'DEFENSE')
         self.vampirism = getattr(self, 'VAMPIRISM')
 
-    def protect(self, unit):
-        hurt = max((unit.attack - self.defence), 0)
+    def __repr__(self):
+        return f"{self.__class__.__name__}: h={self.health}"
+
+    def protect(self, attack):
+        hurt = max(int(attack - self.defence), 0)
         self.health -= hurt
         return hurt
 
@@ -51,9 +52,16 @@ class Unit(object):
         return True if self.health > 0 else False
 
     def hit(self, my_army: 'Army', enemy: 'Army'):
+        """
+        Return True if kill unit
+        :param my_army:
+        :param enemy:
+        :return:
+        """
         enemy_first_unit = enemy.alive
-        hurt = enemy_first_unit.protect(self)
+        hurt = enemy_first_unit.protect(self.attack)
         self.regenerate(hurt)
+        return not enemy_first_unit.is_alive
 
 
 class Warrior(Unit):
@@ -82,24 +90,11 @@ class Lancer(Warrior):
     HEALTH = 50
     ATTACK = 6
 
-
-class Rookie(Warrior):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.health = 50
-        self.attack = 1
-
-
-class Round(NamedTuple):
-    round: int
-    health_1: int
-    health_2: int
-
-
-class Fight(object):
-    def __init__(self, unit_1, unit_2):
-        self.unit_1: Unit = unit_1
-        self.unit_2: Unit = unit_2
+    def hit(self, my_army: 'Army', enemy: 'Army'):
+        super().hit(my_army, enemy)
+        # Damage half damage to the second unit, if have
+        if len(enemy.alive_units) >= 2:
+            enemy.alive_units[1].protect(self.attack / 2)
 
 
 class Army(object):
@@ -134,6 +129,9 @@ class Army(object):
     def is_alive(self):
         return bool(self.alive_units)
 
+    def __repr__(self):
+        return f"({'; '.join(map(str, self.__units))})"
+
 
 class Battle(object):
     def __init__(self):
@@ -143,29 +141,21 @@ class Battle(object):
     def fight(self, army_1, army_2):
         for _ in self.fight_iter(army_1, army_2):
             pass
-        return bool(self.army_1.alive)
+        return self.result
 
-    def fight_iter(self, army_1, army_2):
-        army_1 = Army.convert_unit_to_army(army_1)
-        army_2 = Army.convert_unit_to_army(army_2)
-        self.army_1 = army_1
-        self.army_2 = army_2
+    def fight_iter(self, army_or_unit_1, army_or_unit_2):
+        self.army_1 = Army.convert_unit_to_army(army_or_unit_1)
+        self.army_2 = Army.convert_unit_to_army(army_or_unit_2)
 
-        while self.army_1.alive and self.army_2.alive:
-            unit_1 = self.army_1.alive
-            unit_2 = self.army_2.alive
-            attacker = unit_1
-            defender = unit_2
-            for round_ in itertools.count(1):
-                attacker.hit()
-                # Hack for Lancer
-                # if isinstance(attacker, Lancer) and len(defender.alive_units) >= 2:
-                #     defender.alive_units[1].protect(attacker.attack / 2)
-
-                yield
-                if not defender.is_alive:
-                    break
+        attacker = self.army_1
+        defender = self.army_2
+        while self.army_1.is_alive and self.army_2.is_alive:
+            kill = attacker.alive.hit(attacker, defender)
+            if kill:
+                attacker, defender = self.army_1, self.army_2
+            else:
                 attacker, defender = defender, attacker
+            yield
 
     @property
     def result(self):
