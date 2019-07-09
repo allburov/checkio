@@ -18,19 +18,40 @@
 # 
 # 
 # END_DESC
+from collections.abc import Iterable
+
 
 def completely_empty(val):
-    return True
+    if val == '':
+        return True
+
+    if isinstance(val, Iterable):
+        recursive = any((x is val for x in val))
+        if recursive:
+            return False
+        return all(map(completely_empty, val))
+    elif isinstance(val, int):
+        return False
+    else:
+        return False
+
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    assert completely_empty([iter((1,))]) == False
+    # These "asserts" using only for self-checking and not necessary for auto-testing
     assert completely_empty([]) == True, "First"
     assert completely_empty([1]) == False, "Second"
     assert completely_empty([[]]) == True, "Third"
-    assert completely_empty([[],[]]) == True, "Forth"
+    assert completely_empty([[], []]) == True, "Forth"
     assert completely_empty([[[]]]) == True, "Fifth"
-    assert completely_empty([[],[1]]) == False, "Sixth"
+    assert completely_empty([[], [1]]) == False, "Sixth"
     assert completely_empty([0]) == False, "[0]"
     assert completely_empty(['']) == True
-    assert completely_empty([[],[{'':'No WAY'}]]) == True
+    assert completely_empty([[], [{'': 'No WAY'}]]) == True
+
+    c = []
+    c.append(c)
+    assert completely_empty(c) == False
+
+    assert completely_empty([[None]]) == False
     print('Done')
