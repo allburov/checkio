@@ -386,6 +386,35 @@ def test_weapon_smoke():
     w_dead.equip_weapon(great_axe)
     assert w_dead.is_alive is False
 
+
+def test_weapon_vampire():
+    w = Warrior()
+    ga = GreatAxe()
+    w.equip_weapon(ga)
+    assert w.health == 35
+    assert w.attack == 10
+    assert w.vampirism == 0
+    assert w.defense == 0
+
+
+def test_the_weapons_6():
+    weapon_1 = Sword()
+    weapon_2 = GreatAxe()
+    my_army = Army()
+    my_army.add_units(Defender, 1)
+    my_army.add_units(Warrior, 1)
+    enemy_army = Army()
+    enemy_army.add_units(Knight, 1)
+    enemy_army.add_units(Healer, 1)
+    my_army.units[0].equip_weapon(weapon_2)
+    my_army.units[1].equip_weapon(weapon_2)
+    enemy_army.units[0].equip_weapon(weapon_1)
+    enemy_army.units[1].equip_weapon(weapon_1)
+    battle = Battle()
+    result = battle.fight(my_army, enemy_army)
+    assert result is True
+
+
 def test_the_weapons():
     ogre = Warrior()
     lancelot = Knight()

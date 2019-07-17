@@ -31,8 +31,8 @@ class Unit(object):
 
     def __repr__(self):
         # for attr in GAME_ATTR:
-        return f"{self.__class__.__name__}: h={self.health}"
-
+        return f"{self.__class__.__name__}: h={self.health}/{self.max_health};" + \
+               f"a={self.attack};d={self.defense};v={self.vampirism};hp={self.heal_power}"
 
     def protect(self, attack):
         hurt = max(int(attack - self.defense), 0)
@@ -40,6 +40,7 @@ class Unit(object):
         return hurt
 
     def heal_self(self, health):
+        health = int(health)
         self.health = min(self.max_health, self.health + health)
 
     def regenerate(self, hurt):
@@ -66,7 +67,8 @@ class Unit(object):
         return not enemy_first_unit.is_alive
 
     def do_heal(self, ally: 'Unit'):
-        ally.heal_self(self.heal_power)
+        if ally.is_alive:
+            ally.heal_self(self.heal_power)
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         """
@@ -79,7 +81,11 @@ class Unit(object):
 
     def equip_weapon(self, weapon: 'Weapon'):
         for attr in GAME_ATTR:
-            value = getattr(self, attr) + getattr(weapon, attr)
+            cur_val = getattr(self, attr)
+            if cur_val == 0:
+                continue
+            value = cur_val + getattr(weapon, attr)
+            value = max(0, value)
             setattr(self, attr, value)
         self.max_health += weapon.health
 
