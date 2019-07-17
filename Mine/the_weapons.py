@@ -11,37 +11,43 @@
 from collections import UserList
 from typing import Type, List
 
+GAME_ATTR = ('health', 'attack', 'defense', 'vampirism', 'heal_power')
+
 
 class Unit(object):
     HEALTH = None
     ATTACK = None
     DEFENSE = 0
     VAMPIRISM = 0
-    HEAL = 0
+    HEAL_POWER = 0
 
     def __init__(self):
         self.health = getattr(self, 'HEALTH', None)
         self.attack = getattr(self, 'ATTACK', None)
-        self.defence = getattr(self, 'DEFENSE')
+        self.defense = getattr(self, 'DEFENSE')
         self.vampirism = getattr(self, 'VAMPIRISM')
+        self.heal_power = getattr(self, 'HEAL_POWER')
+        self.max_health = self.health
 
     def __repr__(self):
+        # for attr in GAME_ATTR:
         return f"{self.__class__.__name__}: h={self.health}"
 
+
     def protect(self, attack):
-        hurt = max(int(attack - self.defence), 0)
+        hurt = max(int(attack - self.defense), 0)
         self.health -= hurt
         return hurt
 
     def heal_self(self, health):
-        self.health = min(self.HEALTH, self.health + health)
+        self.health = min(self.max_health, self.health + health)
 
     def regenerate(self, hurt):
         """
         :param hurt: really hurt for other unit
         :return:
         """
-        self.heal_self(hurt * self.vampirism)
+        self.heal_self(hurt * self.vampirism / 100)
 
     @property
     def is_alive(self):
@@ -59,8 +65,8 @@ class Unit(object):
         self.regenerate(hurt)
         return not enemy_first_unit.is_alive
 
-    def heal(self, ally: 'Unit'):
-        ally.heal_self(self.HEAL)
+    def do_heal(self, ally: 'Unit'):
+        ally.heal_self(self.heal_power)
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         """
@@ -70,6 +76,12 @@ class Unit(object):
         :return:
         """
         pass
+
+    def equip_weapon(self, weapon: 'Weapon'):
+        for attr in GAME_ATTR:
+            value = getattr(self, attr) + getattr(weapon, attr)
+            setattr(self, attr, value)
+        self.max_health += weapon.health
 
 
 class Warrior(Unit):
@@ -91,7 +103,7 @@ class Defender(Warrior):
 class Vampire(Warrior):
     HEALTH = 40
     ATTACK = 4
-    VAMPIRISM = 0.5
+    VAMPIRISM = 50
 
 
 class Lancer(Warrior):
@@ -108,19 +120,20 @@ class Lancer(Warrior):
 class Healer(Warrior):
     HEALTH = 60
     ATTACK = 0
-    HEAL = 2
+    HEAL_POWER = 2
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         my_ix = my_army.index(self)
         ally_ix = my_ix - 1
         if ally_ix >= 0:
-            self.heal(my_army[ally_ix])
+            self.do_heal(my_army[ally_ix])
 
 
 class Army(UserList):
     def __init__(self):
         super().__init__([])
         self.data: List[Unit] = []
+        self.units = self.data
 
     def add_units(self, type_: Type[Unit], count=1):
         units = [type_() for _ in range(count)]
@@ -154,6 +167,52 @@ class Army(UserList):
 
     def __repr__(self):
         return f"({'; '.join(map(str, self.data))})"
+
+
+class Weapon(object):
+    HEALTH = 0
+    ATTACK = 0
+    DEFENSE = 0
+    VAMPIRISM = 0
+    HEAL_POWER = 0
+
+    def __init__(self, health=None, attack=None, defense=None, vampirism=None, heal_power=None):
+        self.health = self.HEALTH if health is None else health
+        self.attack = self.ATTACK if attack is None else attack
+        self.defense = self.DEFENSE if defense is None else defense
+        self.vampirism = self.VAMPIRISM if vampirism is None else vampirism
+        self.heal_power = self.HEAL_POWER if heal_power is None else heal_power
+
+
+class Sword(Weapon):
+    HEALTH = +5
+    ATTACK = +2
+
+
+class Shield(Weapon):
+    HEALTH = +20
+    ATTACK = -1
+    DEFENSE = +2
+
+
+class GreatAxe(Weapon):
+    HEALTH = -15
+    ATTACK = +5
+    DEFENSE = -2
+    VAMPIRISM = +10
+
+
+class Katana(Weapon):
+    HEALTH = -20
+    ATTACK = +6
+    DEFENSE = -5
+    VAMPIRISM = +50
+
+
+class MagicWand(Weapon):
+    HEALTH = +30
+    ATTACK = +3
+    HEAL_POWER = +3
 
 
 class Battle(object):
@@ -199,61 +258,3 @@ class Battle(object):
 
 
 fight = Battle().fight
-
-if __name__ == '__main__':
-    # These "asserts" using only for self-checking and not necessary for auto-testing
-
-    ogre = Warrior()
-    lancelot = Knight()
-    richard = Defender()
-    eric = Vampire()
-    freelancer = Lancer()
-    priest = Healer()
-
-    sword = Sword()
-    shield = Shield()
-    axe = GreatAxe()
-    katana = Katana()
-    wand = MagicWand()
-    super_weapon = Weapon(50, 10, 5, 150, 8)
-
-    ogre.equip_weapon(sword)
-    ogre.equip_weapon(shield)
-    ogre.equip_weapon(super_weapon)
-    lancelot.equip_weapon(super_weapon)
-    richard.equip_weapon(shield)
-    eric.equip_weapon(super_weapon)
-    freelancer.equip_weapon(axe)
-    freelancer.equip_weapon(katana)
-    priest.equip_weapon(wand)
-    priest.equip_weapon(shield)
-
-    ogre.health == 125
-    lancelot.attack == 17
-    richard.defense == 4
-    eric.vampirism == 200
-    freelancer.health == 15
-    priest.heal_power == 5
-
-    fight(ogre, eric) == False
-    fight(priest, richard) == False
-    fight(lancelot, freelancer) == True
-
-    my_army = Army()
-    my_army.add_units(Knight, 1)
-    my_army.add_units(Lancer, 1)
-
-    enemy_army = Army()
-    enemy_army.add_units(Vampire, 1)
-    enemy_army.add_units(Healer, 1)
-
-    my_army.units[0].equip_weapon(axe)
-    my_army.units[1].equip_weapon(super_weapon)
-
-    enemy_army.units[0].equip_weapon(katana)
-    enemy_army.units[1].equip_weapon(wand)
-
-    battle = Battle()
-
-    battle.fight(my_army, enemy_army) == True
-print("Coding complete? Let's try tests!")

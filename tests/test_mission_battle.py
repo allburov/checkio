@@ -236,7 +236,7 @@ def test_the_healer():
     assert fight(freelancer, vampire) == True
     assert freelancer.is_alive == True
     assert freelancer.health == 14
-    priest.heal(freelancer)
+    priest.do_heal(freelancer)
     assert freelancer.health == 16
 
     # battle tests
@@ -321,7 +321,7 @@ def test_straight_fight_github():
     assert fight(freelancer, vampire) == True
     assert freelancer.is_alive == True
     assert freelancer.health == 14
-    priest.heal(freelancer)
+    priest.do_heal(freelancer)
     assert freelancer.health == 16
 
     # battle tests
@@ -365,3 +365,78 @@ def test_straight_fight_github():
     assert battle.fight(my_army, enemy_army) == False
     # assert battle.fight(army_3, army_4) == True
     assert battle.straight_fight(army_5, army_6) == False
+
+
+def test_weapon_smoke():
+    w = Warrior()
+    sword = Sword()
+    w.equip_weapon(sword)
+    assert w.health == 55
+    assert w.attack == 7
+
+    w.equip_weapon(sword)
+    assert w.health == 60
+    assert w.attack == 9
+
+    w_dead = Warrior()
+    great_axe = GreatAxe()
+    w_dead.equip_weapon(great_axe)
+    w_dead.equip_weapon(great_axe)
+    w_dead.equip_weapon(great_axe)
+    w_dead.equip_weapon(great_axe)
+    assert w_dead.is_alive is False
+
+def test_the_weapons():
+    ogre = Warrior()
+    lancelot = Knight()
+    richard = Defender()
+    eric = Vampire()
+    freelancer = Lancer()
+    priest = Healer()
+
+    sword = Sword()
+    shield = Shield()
+    axe = GreatAxe()
+    katana = Katana()
+    wand = MagicWand()
+    super_weapon = Weapon(50, 10, 5, 150, 8)
+
+    ogre.equip_weapon(sword)
+    ogre.equip_weapon(shield)
+    ogre.equip_weapon(super_weapon)
+    lancelot.equip_weapon(super_weapon)
+    richard.equip_weapon(shield)
+    eric.equip_weapon(super_weapon)
+    freelancer.equip_weapon(axe)
+    freelancer.equip_weapon(katana)
+    priest.equip_weapon(wand)
+    priest.equip_weapon(shield)
+
+    assert ogre.health == 125
+    assert lancelot.attack == 17
+    assert richard.defense == 4
+    assert eric.vampirism == 200
+    assert freelancer.health == 15
+    assert priest.heal_power == 5
+
+    assert fight(ogre, eric) == False
+    assert fight(priest, richard) == False
+    assert fight(lancelot, freelancer) == True
+
+    my_army = Army()
+    my_army.add_units(Knight, 1)
+    my_army.add_units(Lancer, 1)
+
+    enemy_army = Army()
+    enemy_army.add_units(Vampire, 1)
+    enemy_army.add_units(Healer, 1)
+
+    my_army.units[0].equip_weapon(axe)
+    my_army.units[1].equip_weapon(super_weapon)
+
+    enemy_army.units[0].equip_weapon(katana)
+    enemy_army.units[1].equip_weapon(wand)
+
+    battle = Battle()
+
+    assert battle.fight(my_army, enemy_army) == True
