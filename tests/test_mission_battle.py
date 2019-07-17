@@ -9,7 +9,7 @@ def test_lancer():
     army2.add_units(Warrior, 1)
     army2.add_units(Knight, 1)
 
-    b = Battle().fight_iter(army1, army2)
+    battle_iter = Battle().fight_iter(army1, army2)
     lancer = army1.alive_units[0]
     warrior, knight = army2.alive_units
 
@@ -17,7 +17,7 @@ def test_lancer():
     assert warrior.health == 50
     assert knight.health == 50
 
-    next(b)
+    next(battle_iter)
 
     assert lancer.health == 50
     assert warrior.health == 44  # 50 - 6
@@ -37,15 +37,15 @@ def test_army_create():
 def test_fight_is_iterator():
     war1 = Warrior()
     war2 = Warrior()
-    fiter = Battle().fight_iter(war1, war2)
+    battle_iter = Battle().fight_iter(war1, war2)
     assert war1.health == 50
     assert war2.health == 50
 
-    next(fiter)
+    next(battle_iter)
     assert war1.health == 50
     assert war2.health == 50 - 5
 
-    next(fiter)
+    next(battle_iter)
     assert war1.health == 50 - 5
     assert war2.health == 50 - 5
 
@@ -171,14 +171,14 @@ def test_the_healer_description():
     army2.append_units(h)
     battle = Battle()
 
-    b = battle.fight_iter(army1, army2)
+    battle_iter = battle.fight_iter(army1, army2)
 
-    next(b)
+    next(battle_iter)
     assert w.health == 44
     assert h.health == 57
     assert l.health == 50
 
-    next(b)
+    next(battle_iter)
     assert w.health == 46
     assert h.health == 57
     assert l.health == 45
@@ -193,8 +193,8 @@ def test_the_healer_max():
     army1.append_units(l)
     army2.append_units(w)
     army2.append_units(h)
-    b = Battle().fight_iter(army2, army1)
-    next(b)
+    battle_iter = Battle().fight_iter(army2, army1)
+    next(battle_iter)
     assert w.health == w.HEALTH
     assert h.health == h.HEALTH
     assert l.health == 45

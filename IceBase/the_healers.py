@@ -1,23 +1,3 @@
-#!/usr/bin/env checkio --domain=py run the-healers
-
-# https://py.checkio.org/mission/the-healers/
-
-# 
-# END_DESC
-
-# Taken from mission The Lancers
-
-
-# Taken from mission The Vampires
-
-
-# Taken from mission The Defenders
-
-
-# Taken from mission Army Battles
-
-
-# Taken from mission The Warriors
 from collections import UserList
 from typing import Type, List
 
@@ -48,8 +28,7 @@ class Unit(object):
 
     def regenerate(self, hurt):
         """
-        :param hurt: really hurt for other unit
-        :return:
+        :param hurt: really hurt for enemy unit
         """
         self.heal_self(hurt * self.vampirism)
 
@@ -60,9 +39,6 @@ class Unit(object):
     def hit(self, my_army: 'Army', enemy: 'Army'):
         """
         Return True if kill unit
-        :param my_army:
-        :param enemy:
-        :return:
         """
         enemy_first_unit = enemy.alive
         hurt = enemy_first_unit.protect(self.attack)
@@ -70,14 +46,14 @@ class Unit(object):
         return not enemy_first_unit.is_alive
 
     def heal(self, ally: 'Unit'):
+        """
+        Heal a ally unit
+        """
         ally.heal_self(self.HEAL)
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         """
         Some action if unit not in front of army
-        :param attacker:
-        :param defender:
-        :return:
         """
         pass
 
@@ -121,6 +97,9 @@ class Healer(Warrior):
     HEAL = 2
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
+        self.heal_right(my_army)
+
+    def heal_right(self, my_army):
         my_ix = my_army.index(self)
         ally_ix = my_ix - 1
         if ally_ix >= 0:
@@ -177,6 +156,9 @@ class Battle(object):
         return self.result
 
     def fight_iter(self, army_or_unit_1, army_or_unit_2):
+        """
+        Return iterator for battle. We can get `next(battle)` and check health for a unit.
+        """
         self.army_1 = Army.convert_unit_to_army(army_or_unit_1)
         self.army_2 = Army.convert_unit_to_army(army_or_unit_2)
 
