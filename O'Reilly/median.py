@@ -18,12 +18,24 @@
 
 from typing import List
 
+
+# Too simple
+# import statistics
+# checkio = statistics.median
+
 def checkio(data: List[int]) -> [int, float]:
+    data = sorted(data)
+    len_ = len(data)
+    index = int(len_ / 2)
 
-    #replace this for solution
-    return data[0]
+    if len_ % 2 == 1:
+        median = data[index]
+    else:
+        median = (data[index] + data[index - 1]) / 2
+    return median
 
-#These "asserts" using only for self-checking and not necessary for auto-testing
+
+# These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
     print("Example:")
     print(checkio([1, 2, 3, 4, 5]))

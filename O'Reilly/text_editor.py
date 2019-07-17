@@ -40,29 +40,37 @@
 # 
 # 
 # END_DESC
+from copy import copy
+
 
 class Text:
-    pass
+    def __init__(self):
+        self._txt = ''
+        self._font = ''
+
+    def write(self, txt):
+        self._txt += txt
+
+    def set_font(self, font):
+        self._font = font
+
+    def show(self):
+        return f"[{self._font}]{self._txt}[{self._font}]" if self._font else self._txt
+
+    def __repr__(self):
+        return self.show()
+
+    def restore(self, version: 'Text'):
+        self._txt = version._txt
+        self._font = version._font
+
 
 class SavedText:
-    pass
+    def __init__(self):
+        self._versions = []
 
+    def save_text(self, text: 'Text'):
+        self._versions.append(copy(text))
 
-if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
-
-    text = Text()
-    saver = SavedText()
-    
-    text.write("At the very beginning ")
-    saver.save_text(text)
-    text.set_font("Arial")
-    saver.save_text(text)
-    text.write("there was nothing.")
-
-    assert text.show() == "[Arial]At the very beginning there was nothing.[Arial]"
-    
-    text.restore(saver.get_version(0))
-    assert text.show() == "At the very beginning "
-
-    print("Coding complete? Let's try tests!")
+    def get_version(self, index):
+        return self._versions[index]
