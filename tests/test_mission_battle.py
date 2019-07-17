@@ -1,4 +1,4 @@
-from IceBase.the_healers import *
+from Mine.the_weapons import *
 
 
 def test_lancer():
@@ -273,3 +273,95 @@ def test_the_healer():
     # REALLY True, but my code passed all checkio checks...
     # assert Battle().fight(army_3, army_4) == True
     assert Battle().fight(army_3, army_4) == False
+
+
+def test_straight_fight_github_description():
+    army_1 = Army()
+    army_1.add_units(Warrior, 2)
+    army_1.add_units(Knight, 1)
+    army_2 = Army()
+    army_2.add_units(Knight, 1)
+    army_2.add_units(Healer, 1)
+    army_2.add_units(Knight, 1)
+
+    result = Battle().straight_fight(army_1, army_2)
+    assert result is True
+
+
+def test_straight_fight_github():
+    chuck = Warrior()
+    bruce = Warrior()
+    carl = Knight()
+    dave = Warrior()
+    mark = Warrior()
+    bob = Defender()
+    mike = Knight()
+    rog = Warrior()
+    lancelot = Defender()
+    eric = Vampire()
+    adam = Vampire()
+    richard = Defender()
+    ogre = Warrior()
+    freelancer = Lancer()
+    vampire = Vampire()
+    priest = Healer()
+
+    assert fight(chuck, bruce) == True
+    assert fight(dave, carl) == False
+    assert chuck.is_alive == True
+    assert bruce.is_alive == False
+    assert carl.is_alive == True
+    assert dave.is_alive == False
+    assert fight(carl, mark) == False
+    assert carl.is_alive == False
+    assert fight(bob, mike) == False
+    assert fight(lancelot, rog) == True
+    assert fight(eric, richard) == False
+    assert fight(ogre, adam) == True
+    assert fight(freelancer, vampire) == True
+    assert freelancer.is_alive == True
+    assert freelancer.health == 14
+    priest.heal(freelancer)
+    assert freelancer.health == 16
+
+    # battle tests
+    my_army = Army()
+    my_army.add_units(Defender, 2)
+    my_army.add_units(Healer, 1)
+    my_army.add_units(Vampire, 2)
+    my_army.add_units(Lancer, 2)
+    my_army.add_units(Healer, 1)
+    my_army.add_units(Warrior, 1)
+
+    enemy_army = Army()
+    enemy_army.add_units(Warrior, 2)
+    enemy_army.add_units(Lancer, 4)
+    enemy_army.add_units(Healer, 1)
+    enemy_army.add_units(Defender, 2)
+    enemy_army.add_units(Vampire, 3)
+    enemy_army.add_units(Healer, 1)
+
+    army_3 = Army()
+    army_3.add_units(Warrior, 1)
+    army_3.add_units(Lancer, 1)
+    army_3.add_units(Healer, 1)
+    army_3.add_units(Defender, 2)
+
+    army_4 = Army()
+    army_4.add_units(Vampire, 3)
+    army_4.add_units(Warrior, 1)
+    army_4.add_units(Healer, 1)
+    army_4.add_units(Lancer, 2)
+
+    army_5 = Army()
+    army_5.add_units(Warrior, 10)
+
+    army_6 = Army()
+    army_6.add_units(Warrior, 6)
+    army_6.add_units(Lancer, 5)
+
+    battle = Battle()
+
+    assert battle.fight(my_army, enemy_army) == False
+    # assert battle.fight(army_3, army_4) == True
+    assert battle.straight_fight(army_5, army_6) == False
