@@ -130,7 +130,7 @@ class Healer(Warrior):
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         my_ix = my_army.alive_units.index(self)
         ally_ix = my_ix - 1
-        if ally_ix == 0:
+        if ally_ix >= 0:
             self.do_heal(my_army.alive_units[ally_ix])
 
 
@@ -188,7 +188,7 @@ class Army(UserList):
 
     @property
     def warlord(self):
-        return any(map(lambda x: isinstance(x, Warlord), self.units))
+        return any(map(lambda x: isinstance(x, Warlord), self.alive_units))
 
     def __move_unit(self, units, key=None, unit_cls: Optional[Type[Unit]] = None, pos=0):
         if unit_cls:
@@ -214,6 +214,8 @@ class Army(UserList):
         units = list(self.data)
         self.data = []
         specific_rules = (Lancer, Healer, Warlord)
+        # Dead first
+        # self.__move_unit(units, key=lambda x: x.health <= 0)
 
         # Bad unit first - not attack, but not Healer
         self.__move_unit(units, key=lambda x: type(x) not in specific_rules and x.attack == 0)

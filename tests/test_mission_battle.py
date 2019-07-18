@@ -270,9 +270,7 @@ def test_the_healer():
     army_4.add_units(Healer, 1)
     army_4.add_units(Lancer, 2)
 
-    # REALLY True, but my code passed all checkio checks...
-    # assert Battle().fight(army_3, army_4) == True
-    assert Battle().fight(army_3, army_4) == False
+    assert Battle().fight(army_3, army_4) == True
 
 
 def test_straight_fight_github_description():
