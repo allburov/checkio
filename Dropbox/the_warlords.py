@@ -62,7 +62,8 @@ class Unit(object):
         enemy_first_unit = enemy.alive
         hurt = enemy_first_unit.protect(self.attack)
         self.regenerate(hurt)
-        return not enemy_first_unit.is_alive
+        kill = not enemy_first_unit.is_alive
+        return kill
 
     def do_heal(self, ally: 'Unit'):
         if ally.is_alive:
@@ -115,10 +116,10 @@ class Lancer(Warrior):
     ATTACK = 6
 
     def hit(self, my_army: 'Army', enemy: 'Army'):
-        super().hit(my_army, enemy)
         # Damage half damage to the second unit, if have
         if len(enemy.alive_units) >= 2:
             enemy.alive_units[1].protect(self.attack / 2)
+        return super().hit(my_army, enemy)
 
 
 class Healer(Warrior):
@@ -127,10 +128,10 @@ class Healer(Warrior):
     HEAL_POWER = 2
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
-        my_ix = my_army.index(self)
+        my_ix = my_army.alive_units.index(self)
         ally_ix = my_ix - 1
-        if ally_ix >= 0:
-            self.do_heal(my_army[ally_ix])
+        if ally_ix == 0:
+            self.do_heal(my_army.alive_units[ally_ix])
 
 
 class Warlord(Warrior):
