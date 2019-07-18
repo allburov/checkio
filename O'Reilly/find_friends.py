@@ -22,22 +22,33 @@
 # 
 # 
 # END_DESC
+from collections import defaultdict
+
+
+def find_shortest_path(graph, start, end, path=[]):
+    path = path + [start]
+    if start == end:
+        return path
+    if start not in graph:
+        return None
+    shortest = None
+    for node in graph[start]:
+        if node not in path:
+            newpath = find_shortest_path(graph, node, end, path)
+            if newpath:
+                if not shortest or len(newpath) < len(shortest):
+                    shortest = newpath
+    return shortest
+
 
 def check_connection(network, first, second):
-    return True or False
+    network_graph = defaultdict(set)
+    # Parse
+    for friendship in network:
+        f1, f2 = friendship.split('-')
+        network_graph[f1].add(f2)
+        network_graph[f2].add(f1)
+    # find path https://www.python.org/doc/essays/graphs/
+    sp = find_shortest_path(network_graph, first, second)
+    return bool(sp)
 
-
-if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
-    assert check_connection(
-        ("dr101-mr99", "mr99-out00", "dr101-out00", "scout1-scout2",
-         "scout3-scout1", "scout1-scout4", "scout4-sscout", "sscout-super"),
-        "scout2", "scout3") == True, "Scout Brotherhood"
-    assert check_connection(
-        ("dr101-mr99", "mr99-out00", "dr101-out00", "scout1-scout2",
-         "scout3-scout1", "scout1-scout4", "scout4-sscout", "sscout-super"),
-        "super", "scout2") == True, "Super Scout"
-    assert check_connection(
-        ("dr101-mr99", "mr99-out00", "dr101-out00", "scout1-scout2",
-         "scout3-scout1", "scout1-scout4", "scout4-sscout", "sscout-super"),
-        "dr101", "sscout") == False, "I don't know any scouts."
