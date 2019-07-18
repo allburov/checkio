@@ -197,6 +197,8 @@ class Army(UserList):
         for unit in reversed(units):
             if not key(unit):
                 continue
+            if unit in self.data:
+                continue
             if pos == -1:
                 self.data.append(unit)
             else:
@@ -215,7 +217,7 @@ class Army(UserList):
         self.data = []
         specific_rules = (Lancer, Healer, Warlord)
         # Dead first
-        # self.__move_unit(units, key=lambda x: x.health <= 0)
+        self.__move_unit(units, key=lambda x: x.health <= 0)
 
         # Bad unit first - not attack, but not Healer
         self.__move_unit(units, key=lambda x: type(x) not in specific_rules and x.attack == 0)
