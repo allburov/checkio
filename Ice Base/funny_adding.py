@@ -6,13 +6,13 @@
 # 
 # Input:A list of two elements. Each element is a positive integer.
 # 
-# Output:The sum of two numbers.
+# Output:The sum_n of two numbers.
 # 
 # 
 # END_DESC
 
 def checkio(data):
-    """The sum of two integer elements"""
+    """The sum_n of two integer elements"""
     a, b = data
     
 if __name__ == '__main__':

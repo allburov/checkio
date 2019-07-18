@@ -2,9 +2,9 @@
 
 # https://py.checkio.org/mission/count-consecutive-summers/
 
-# Positive integers can be expressed as sums of consecutive positive integers in various ways. For example, 42 can be expressed as such a sum in four different ways:(a) 3+4+5+6+7+8+9, (b) 9+10+11+12, (c) 13+14+15 and (d) 42. As the last solution (d) shows, any positive integer can always be trivially expressed as a singleton sum   that consists of that integer alone.
+# Positive integers can be expressed as sums of consecutive positive integers in various ways. For example, 42 can be expressed as such a sum_n in four different ways:(a) 3+4+5+6+7+8+9, (b) 9+10+11+12, (c) 13+14+15 and (d) 42. As the last solution (d) shows, any positive integer can always be trivially expressed as a singleton sum_n   that consists of that integer alone.
 # 
-# Compute how many different ways it can be expressed as a sum of consecutive positive integers.
+# Compute how many different ways it can be expressed as a sum_n of consecutive positive integers.
 # 
 # Input:Int.
 # 

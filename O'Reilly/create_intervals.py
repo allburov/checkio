@@ -16,15 +16,27 @@
 # 
 # END_DESC
 
+
 def create_intervals(data):
-    """
-        Create a list of intervals out of set of ints.
-    """
-    # your code here
-    return None
+    if not data:
+        return []
+    result = []
+    data = sorted(data)
+    start = data[0]
+    for i in range(1, len(data)):
+        if data[i] != data[i - 1] + 1:
+            result.append((start, data[i - 1]))
+            start = data[i]
+
+    result.append((start, data[-1]))
+    return result
+
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
-    assert create_intervals({1, 2, 3, 4, 5, 7, 8, 12}) == [(1, 5), (7, 8), (12, 12)], "First"
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    assert create_intervals([]) == []
+    assert create_intervals([1]) == [(1, 1)]
+    assert create_intervals({1, 2, 3, 4, 5, 7, 8, 12, 14}) == [(1, 5), (7, 8), (12, 12), (14, 14)], "First"
     assert create_intervals({1, 2, 3, 6, 7, 8, 4, 5}) == [(1, 8)], "Second"
+    assert create_intervals({1, 3, 5, 7}) == [(1, 1), (3, 3), (5, 5), (7, 7)], "Second"
     print('Almost done! The only thing left to do is to Check it!')

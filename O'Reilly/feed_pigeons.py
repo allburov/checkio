@@ -14,13 +14,28 @@
 # 
 # 
 # END_DESC
+from itertools import count
 
-def checkio(number):
-    return 0
+
+def birds(minute):
+    return minute * (minute + 1) / 2
+
+
+def checkio(food):
+    for minute in count():
+        food -= birds(minute)
+        if food < birds(minute + 1):
+            # We can feed anymore pigeons :(
+            return max(food, birds(minute))
+
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    assert checkio(3) == 2, "2nd example"
+
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    assert checkio(0) == 0, "1st example"
     assert checkio(1) == 1, "1st example"
     assert checkio(2) == 1, "2nd example"
     assert checkio(5) == 3, "3rd example"
     assert checkio(10) == 6, "4th example"
+    assert checkio(10 ** 5 - 1)

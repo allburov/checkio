@@ -5,7 +5,7 @@
 # Hey, are you ready for a Scrabble game party?
 # You have a list of words and you have to find only one that is the most valuable among  them.
 # Rules:
-# The worth of each word is equivalent to the sum of letters which it consists of.
+# The worth of each word is equivalent to the sum_n of letters which it consists of.
 # The values of the letters are as follow:
 # e, a, i, o, n, r, t, l, s, u = 1
 # d, g = 2

@@ -4,7 +4,7 @@
 
 # You're on your way to a board game convention.    Chances are there’ll be some stiff competition,    so you decide to learn more about dice probabilities since you suspect you'll be rolling a lot of them soon.
 # 
-# Typically, when using multiple dice, you simply roll them and sum up all the result.    To get started with your investigation of dice probability, write a function that takes the number of dice,    the number of sides per die and a target number and    returns the probability of getting a total roll of exactly the target value.    The result should be given with four digits precision as ±0.0001.    For example, if you roll 2 six-sided dice, the probability of getting exactly a 3 is 2/36 or 5.56%,    which you should return as ≈0.0556.
+# Typically, when using multiple dice, you simply roll them and sum_n up all the result.    To get started with your investigation of dice probability, write a function that takes the number of dice,    the number of sides per die and a target number and    returns the probability of getting a total roll of exactly the target value.    The result should be given with four digits precision as ±0.0001.    For example, if you roll 2 six-sided dice, the probability of getting exactly a 3 is 2/36 or 5.56%,    which you should return as ≈0.0556.
 # 
 # 
 # 
