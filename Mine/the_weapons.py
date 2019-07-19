@@ -30,7 +30,7 @@ class Unit(object):
         self.max_health = self.health
 
     def __repr__(self):
-        # for attr in GAME_ATTR:
+        # for attr in ATTRIBUTES:
         return f"{self.__class__.__name__}: h={self.health}/{self.max_health};" + \
                f"a={self.attack};d={self.defense};v={self.vampirism};hp={self.heal_power}"
 

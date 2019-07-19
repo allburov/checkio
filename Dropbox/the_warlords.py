@@ -9,26 +9,29 @@
 from collections import UserList
 from typing import Type, List, Optional
 
-GAME_ATTR = ('health', 'attack', 'defense', 'vampirism', 'heal_power')
+
+class ObjectWithAttribute(object):
+    ATTRIBUTES = ('health', 'attack', 'defense', 'vampirism', 'heal_power')
+    health = 0
+    attack = 0
+    defense = 0
+    vampirism = 0
+    heal_power = 0
+
+    def __init__(self, health=None, attack=None, defense=None, vampirism=None, heal_power=None):
+        # Rewrite from default value
+        for attr in self.ATTRIBUTES:
+            default = getattr(self, attr)
+            new_ = locals()[attr]
+            setattr(self, attr, default if new_ is None else new_)
 
 
-class Unit(object):
-    HEALTH = None
-    ATTACK = None
-    DEFENSE = 0
-    VAMPIRISM = 0
-    HEAL_POWER = 0
-
+class Unit(ObjectWithAttribute):
     def __init__(self):
-        self.health = getattr(self, 'HEALTH', None)
-        self.attack = getattr(self, 'ATTACK', None)
-        self.defense = getattr(self, 'DEFENSE')
-        self.vampirism = getattr(self, 'VAMPIRISM')
-        self.heal_power = getattr(self, 'HEAL_POWER')
+        super().__init__()
         self.max_health = self.health
 
     def __repr__(self):
-        # for attr in GAME_ATTR:
         return f"{self.__class__.__name__}: h={self.health}/{self.max_health};" + \
                f"a={self.attack};d={self.defense};v={self.vampirism};hp={self.heal_power}"
 
@@ -79,7 +82,7 @@ class Unit(object):
         pass
 
     def equip_weapon(self, weapon: 'Weapon'):
-        for attr in GAME_ATTR:
+        for attr in self.ATTRIBUTES:
             cur_val = getattr(self, attr)
             if cur_val == 0:
                 continue
@@ -90,30 +93,30 @@ class Unit(object):
 
 
 class Warrior(Unit):
-    HEALTH = 50
-    ATTACK = 5
+    health = 50
+    attack = 5
 
 
 class Knight(Warrior):
-    HEALTH = 50
-    ATTACK = 7
+    health = 50
+    attack = 7
 
 
 class Defender(Warrior):
-    HEALTH = 60
-    ATTACK = 3
-    DEFENSE = 2
+    health = 60
+    attack = 3
+    defense = 2
 
 
 class Vampire(Warrior):
-    HEALTH = 40
-    ATTACK = 4
-    VAMPIRISM = 50
+    health = 40
+    attack = 4
+    vampirism = 50
 
 
 class Lancer(Warrior):
-    HEALTH = 50
-    ATTACK = 6
+    health = 50
+    attack = 6
 
     def hit(self, my_army: 'Army', enemy: 'Army'):
         # Damage half damage to the second unit, if have
@@ -123,9 +126,9 @@ class Lancer(Warrior):
 
 
 class Healer(Warrior):
-    HEALTH = 60
-    ATTACK = 0
-    HEAL_POWER = 2
+    health = 60
+    attack = 0
+    heal_power = 2
 
     def passive_action(self, my_army: 'Army', enemy: 'Army'):
         my_ix = my_army.alive_units.index(self)
@@ -135,9 +138,9 @@ class Healer(Warrior):
 
 
 class Warlord(Warrior):
-    HEALTH = 100
-    ATTACK = 4
-    DEFENSE = 2
+    health = 100
+    attack = 4
+    defense = 2
 
 
 class Army(UserList):
@@ -243,50 +246,38 @@ class Army(UserList):
         return True
 
 
-class Weapon(object):
-    HEALTH = 0
-    ATTACK = 0
-    DEFENSE = 0
-    VAMPIRISM = 0
-    HEAL_POWER = 0
-
-    def __init__(self, health=None, attack=None, defense=None, vampirism=None, heal_power=None):
-        self.health = self.HEALTH if health is None else health
-        self.attack = self.ATTACK if attack is None else attack
-        self.defense = self.DEFENSE if defense is None else defense
-        self.vampirism = self.VAMPIRISM if vampirism is None else vampirism
-        self.heal_power = self.HEAL_POWER if heal_power is None else heal_power
+class Weapon(ObjectWithAttribute): pass
 
 
 class Sword(Weapon):
-    HEALTH = +5
-    ATTACK = +2
+    health = +5
+    attack = +2
 
 
 class Shield(Weapon):
-    HEALTH = +20
-    ATTACK = -1
-    DEFENSE = +2
+    health = +20
+    attack = -1
+    defense = +2
 
 
 class GreatAxe(Weapon):
-    HEALTH = -15
-    ATTACK = +5
-    DEFENSE = -2
-    VAMPIRISM = +10
+    health = -15
+    attack = +5
+    defense = -2
+    vampirism = +10
 
 
 class Katana(Weapon):
-    HEALTH = -20
-    ATTACK = +6
-    DEFENSE = -5
-    VAMPIRISM = +50
+    health = -20
+    attack = +6
+    defense = -5
+    vampirism = +50
 
 
 class MagicWand(Weapon):
-    HEALTH = +30
-    ATTACK = +3
-    HEAL_POWER = +3
+    health = +30
+    attack = +3
+    heal_power = +3
 
 
 class Battle(object):

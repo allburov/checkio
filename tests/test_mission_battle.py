@@ -195,8 +195,8 @@ def test_the_healer_max():
     army2.append_units(h)
     battle_iter = Battle().fight_iter(army2, army1)
     next(battle_iter)
-    assert w.health == w.HEALTH
-    assert h.health == h.HEALTH
+    assert w.health == 50
+    assert h.health == 60
     assert l.health == 45
 
 
