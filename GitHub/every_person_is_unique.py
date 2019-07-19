@@ -62,20 +62,88 @@
 # 
 # 
 # END_DESC
+from datetime import date
 
-class Person:
+MONTH_IN_YEAR = 12
+
+
+class UniqueByArgs(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        attr = (cls, *args)
+        if attr not in cls._instances:
+            cls._instances[attr] = super(UniqueByArgs, cls).__call__(*args, **kwargs)
+        return cls._instances[attr]
+
+
+class Person(object, metaclass=UniqueByArgs):
+    _pronoun = {
+        'unknown': '',
+        'male': 'He ',
+        'female': 'She ',
+    }
+
     def __init__(self, first_name, last_name, birth_date, job, working_years, salary, country, city, gender='unknown'):
-        raise NotImplementedError
+        self.first_name = first_name
+        self.last_name = last_name
+        self.job = job
+        self.working_years = working_years
+        self.salary = salary
+        self.country = country
+        self.city = city
+        self.gender = gender
+
+        d, m, y = map(int, birth_date.split('.'))
+        self.birth_date = date(y, m, d)
+
+    def name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def age(self):
+        now = date(2018, 1, 1)
+        return int((now - self.birth_date).days / 365)
+
+    @property
+    def pronoun(self):
+        return self._pronoun[self.gender]
+
+    def work(self):
+        w = f"{self.pronoun}is a {self.job}".capitalize()
+        return w
+
+    def money(self):
+        m = self.salary * self.working_years * MONTH_IN_YEAR
+        return "{:,}".format(m).replace(',', ' ')
+
+    def home(self):
+        return f"Lives in {self.city}, {self.country}"
 
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
-
     p1 = Person("John", "Smith", "19.09.1979", "welder", 15, 3600, "Canada", "Vancouver", "male")
-    p2 = Person("Hanna Rose", "May", "05.12.1995", "designer", 2.2, 2150, "Austria", "Vienna")
     assert p1.name() == "John Smith", "Name"
     assert p1.age() == 38, "Age"
-    assert p2.work() == "Is a designer", "Job"
     assert p1.money() == "648 000", "Money"
+
+    p1 = Person("John", "Smith", "19.09.1979", "welder", 15, 3600, "Canada", "Vancouver", "male")
+    assert Person("John", "Smith", "19.09.1979", "welder", 15, 3600, "Canada", "Vancouver", "male") == p1
+    assert Person("John", "Smith", "19.09.1979", "welder", 15, 3600, "Canada", "Vancouver", "male") is p1
+
+    p2 = Person("Hanna Rose", "May", "05.12.1995", "designer", 2.2, 2150, "Austria", "Vienna")
+    assert p1 != p2, "UniqueByArgs..."
+    assert p2.work() == "Is a designer", "Job"
     assert p2.home() == "Lives in Vienna, Austria", "Home"
-    print("Coding complete? Let's try tests!")
+
+    # Gender test
+    p3 = Person("Hanna Rose", "May", "05.12.1995", "designer", 2.2, 2150, "Austria", "Vienna")
+    # unknown
+    assert p3.work() == "Is a designer"
+
+    # male
+    p3.gender = "male"
+    assert p3.work() == "He is a designer"
+
+    # female
+    p3.gender = "female"
+    assert p3.work() == "She is a designer"

@@ -6,7 +6,7 @@
 # 
 # first_channel()- turns on the first channel from the list.
 # last_channel()- turns on the last channel from the list.
-# turn_channel(N)- turns on the N channel. Pay attention that the channel numbers start from 1, not from 0.
+# _set_pos(N)- turns on the N channel. Pay attention that the channel numbers start from 1, not from 0.
 # next_channel()- turns on the next channel. If the current channel is the last one, turns on the first channel.
 # previous_channel()- turns on the previous channel. If the current channel is the first one, turns on the last channel.
 # current_channel()- returns the name of the current channel.
@@ -23,7 +23,6 @@
 # 
 # controller.first_channel() == "BBC"
 # controller.last_channel() == "TV1000"
-# controller.turn_channel(1) == "BBC"
 # controller.next_channel() == "Discovery"
 # controller.previous_channel() == "BBC"
 # controller.current_channel() == "BBC"
@@ -42,16 +41,43 @@
 # END_DESC
 
 class VoiceCommand:
-    pass
+    def __init__(self, channels):
+        self.channels = channels
+        self._pos = 0
+
+    def _set_pos(self, pos):
+        self._pos = pos % len(self.channels)
+        return self.channels[self._pos]
+
+    def first_channel(self):
+        return self._set_pos(0)
+
+    def last_channel(self):
+        return self._set_pos(-1)
+
+    def next_channel(self):
+        return self._set_pos(self._pos + 1)
+
+    def previous_channel(self):
+        return self._set_pos(self._pos - 1)
+
+    def current_channel(self):
+        return self._set_pos(self._pos)
+
+    def turn_channel(self, pos):
+        return self._set_pos(pos - 1)
+
+    def is_exist(self, name):
+        return "Yes" if name in self.channels else "No"
 
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    # These "asserts" using only for self-checking and not necessary for auto-testing
 
     CHANNELS = ["BBC", "Discovery", "TV1000"]
 
     controller = VoiceCommand(CHANNELS)
-    
+
     assert controller.first_channel() == "BBC"
     assert controller.last_channel() == "TV1000"
     assert controller.turn_channel(1) == "BBC"
@@ -60,4 +86,10 @@ if __name__ == '__main__':
     assert controller.current_channel() == "BBC"
     assert controller.is_exist(4) == "No"
     assert controller.is_exist("TV1000") == "Yes"
-    print("Coding complete? Let's try tests!")
+
+    # Cycle test
+    controller.first_channel()
+    controller.next_channel()
+    controller.next_channel()
+    controller.next_channel()
+    assert controller.current_channel() == "BBC"
