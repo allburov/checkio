@@ -70,7 +70,12 @@ MONTH_IN_YEAR = 12
 class UniqueByArgs(type):
     _instances = {}
 
+    def __new__(cls, *args, **kwargs):
+        print("New in metaclass")
+        return super().__new__(cls, *args, **kwargs)
+
     def __call__(cls, *args, **kwargs):
+        print("Call in metaclass")
         attr = (cls, *args)
         if attr not in cls._instances:
             cls._instances[attr] = super(UniqueByArgs, cls).__call__(*args, **kwargs)
