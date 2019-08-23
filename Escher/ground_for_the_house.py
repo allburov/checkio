@@ -5,49 +5,34 @@
 # 
 # END_DESC
 
+TOO_MUCH = 100
+
+
 def house(plan):
-    #replace this for solution
-    return 0
+    lines = [x for x in plan.splitlines() if x]
 
-if __name__ == '__main__':
-    print("Example:")
-    print(house('''
-0000000
-##00##0
-######0
-##00##0
-#0000#0
-'''))
+    up = TOO_MUCH
+    down = 0
+    left = TOO_MUCH
+    right = 0
+    for i, line in enumerate(lines, start=1):
+        lpos = line.find('#') + 1
+        rpos = line.rfind('#') + 1
+        # No # in line
+        if lpos == 0:
+            continue
+        up = min(i, up)
+        down = max(down, i)
+        left = min(lpos, left)
+        right = max(rpos, right)
 
-    #These "asserts" using only for self-checking and not necessary for auto-testing
-    assert house('''
-0000000
-##00##0
-######0
-##00##0
-#0000#0
-''') == 24
+    if up == TOO_MUCH:
+        return 0
 
-    assert house('''0000000000
-#000##000#
-##########
-##000000##
-0000000000
-''') == 30
+    for var in ('up', 'down', 'left', 'right'):
+        print(var, '=', locals()[var])
 
-    assert house('''0000
-0000
-#000
-''') == 1
+    house_square = (down - up + 1) * (right - left + 1)
+    print(f'Square = {house_square}')
+    return house_square
 
-    assert house('''0000
-0000
-''') == 0
-
-    assert house('''
-0##0
-0000
-#00#
-''') == 12
-
-    print("Coding complete? Click 'Check' to earn cool rewards!")
