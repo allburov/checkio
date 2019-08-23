@@ -29,12 +29,15 @@
 # 
 # END_DESC
 
-
-COLORS = ['Green', 'Red', 'Blue', 'Yellow']
+COLORS = {'Red', 'Blue', "Green", 'Yellow'}
 
 
 class Lamp:
+
     def __init__(self):
+        """
+        Trololo
+        """
         self.iter = iter(COLORS)
 
     def light(self):
@@ -43,3 +46,6 @@ class Lamp:
         except StopIteration:
             self.iter = iter(COLORS)
             return next(self.iter)
+
+
+Lamp().light()

@@ -15,13 +15,17 @@
 # 
 # 
 # END_DESC
+import typing
+
 
 def checkio(words_set):
     return True or False
 
-#These "asserts" using only for self-checking and not necessary for auto-testing
+
+# These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
     print("Example:")
+
     print(checkio({"hello", "lo", "he"}))
 
     assert checkio({"hello", "lo", "he"}) == True, "helLO"
