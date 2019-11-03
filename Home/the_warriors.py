@@ -1,9 +1,8 @@
-#!/usr/bin/env checkio --domain=py run the-warriors
-
-# https://py.checkio.org/mission/the-warriors/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-warriors
 
 # 
 # END_DESC
+
 import itertools
 
 from typing import NamedTuple

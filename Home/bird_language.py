@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run bird-language
-
-# https://py.checkio.org/mission/bird-language/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run bird-language
 
 # Stephan has a friend who happens to be a little mechbird.    Recently, he was trying to teach it how to speak basic language.    Today the bird spoke its first word: "hieeelalaooo".    This sounds a lot like "hello", but with too many vowels.    Stephan asked Nikola for help and he helped to examine how the bird changes words.    With the information they discovered, we should help them to make a translation module.
 # 

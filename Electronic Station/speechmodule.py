@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run speechmodule
-
-# https://py.checkio.org/mission/speechmodule/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run speechmodule
 
 # Stephen's speech module is broken.    This module is responsible for his number pronunciation.    He has to click to input all of the numerical digits in a figure,    so when there are big numbers it can take him a long time.    Help the robot to speak properly and increase his number processing speed by writing a new speech module for him.    All the words in the string must be separated by exactly one space character.    Be careful with spaces -- it's hard to see if you place two spaces instead one.
 # 

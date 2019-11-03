@@ -1,10 +1,7 @@
-#!/usr/bin/env checkio --domain=py run the-ship-teams
-
-# https://py.checkio.org/mission/the-ship-teams/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-ship-teams
 
 # 
 # END_DESC
-
 
 def two_teams(sailors):
     crew = lambda fn: sorted(x for x, y in filter(fn, sailors.items()))

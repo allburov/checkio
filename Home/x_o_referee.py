@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run x-o-referee
-
-# https://py.checkio.org/mission/x-o-referee/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run x-o-referee
 
 # Tic-Tac-Toe, sometimes also known as Xs and Os, is a game for two players    (X and O) who take turns marking the spaces in a 3×3 grid.    The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal rows (NW-SE and    NE-SW) wins the game.
 # 

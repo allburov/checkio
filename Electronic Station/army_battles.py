@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run army-battles
-
-# https://py.checkio.org/mission/army-battles/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run army-battles
 
 # 
 # END_DESC

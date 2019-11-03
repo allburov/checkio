@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run find-friends
-
-# https://py.checkio.org/mission/find-friends/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run find-friends
 
 # Sophia's drones are not soulless and stupid drones; they can make and have friends.    In fact, they already are working for the their own social network just for drones!    Sophia has received the data about the connections between drones and she wants to know more about relations between them.
 # 
@@ -22,6 +20,7 @@
 # 
 # 
 # END_DESC
+
 from collections import defaultdict
 
 
@@ -51,4 +50,3 @@ def check_connection(network, first, second):
     # find path https://www.python.org/doc/essays/graphs/
     sp = find_shortest_path(network_graph, first, second)
     return bool(sp)
-

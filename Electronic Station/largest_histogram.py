@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run largest-histogram
-
-# https://py.checkio.org/mission/largest-histogram/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run largest-histogram
 
 # "Your power to choose can never be taken from you.
 # It can be neglected and it can be ignored.
@@ -27,8 +25,11 @@
 # 0 < len(data) < 1000
 # 
 # 
-#
+# 
 # END_DESC
+
+#
+
 
 
 # split list like str.split() (from boltons: https://github.com/mahmoud/boltons/blob/master/boltons/iterutils.py)

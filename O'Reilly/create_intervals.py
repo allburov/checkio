@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run create-intervals
-
-# https://py.checkio.org/mission/create-intervals/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run create-intervals
 
 # From a set of ints you have to create a list of closed intervals as tuples, so the  intervals are covering all the values found in the set.
 # 
@@ -15,7 +13,6 @@
 # 
 # 
 # END_DESC
-
 
 def create_intervals(data):
     if not data:

@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run dialogues
-
-# https://py.checkio.org/mission/dialogues/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run dialogues
 
 # The modern world is filled with means of communication - the social networks, messengers, phone calls, SMS etc.But sometimes in every communication channel a flaw can be detected and in the moments like that you think to yourself: "I should create my own messenger which won’t have problems like this one".
 # In this mission you’ll get your chance.
@@ -41,6 +39,7 @@
 # 
 # 
 # END_DESC
+
 import re
 from typing import Optional
 

@@ -1,9 +1,8 @@
-#!/usr/bin/env checkio --domain=py run binary-count
-
-# https://py.checkio.org/mission/binary-count/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run binary-count
 
 # 
 # END_DESC
+
 from math import sqrt
 
 

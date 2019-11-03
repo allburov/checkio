@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run text-editor
-
-# https://py.checkio.org/mission/text-editor/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run text-editor
 
 # I believe that many of you have dealt with such a problem. One day you are working in the text editor, saving the document and closing it. And the next day you are re-reading the text and realizing that one of the previous versions was better but there is no way to get it back. This thing can be easily handled by the version control system (for example, git), but it’s used mostly by the developers and not the ordinary people who work with texts. In this mission you’ll help the latter by creating a text editor prototype that supports the version control system, which will allow to save different versions of the text and restore any one of them.
 # Your task is to create 2 classes: Text and SavedText. The first will works with texts (adding, font changing, etc.), the second will control the versions and save them.
@@ -40,6 +38,7 @@
 # 
 # 
 # END_DESC
+
 from copy import copy
 
 

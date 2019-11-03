@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run time-converter-24h-to-12h
-
-# https://py.checkio.org/mission/time-converter-24h-to-12h/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run time-converter-24h-to-12h
 
 # You prefer a good old 12-hour time format. But the modern world we live in would rather use the 24-hour format and you see it everywhere. Your task is to convert the time from the 24-h format into 12-h format by following the next rules:
 # - the output format should be 'hh:mm a.m.' (for hours before midday) or 'hh:mm p.m.' (for hours after midday)

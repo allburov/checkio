@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run the-weapons
-
-# https://py.checkio.org/mission/the-weapons/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-weapons
 
 # 
 # END_DESC

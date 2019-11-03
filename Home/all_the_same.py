@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run all-the-same
-
-# https://py.checkio.org/mission/all-the-same/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run all-the-same
 
 # In this mission you should check if all elements in the given list are equal.
 # 

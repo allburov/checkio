@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run the-defenders
-
-# https://py.checkio.org/mission/the-defenders/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-defenders
 
 # 
 # END_DESC

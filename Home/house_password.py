@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run house-password
-
-# https://py.checkio.org/mission/house-password/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run house-password
 
 # 
 # END_DESC

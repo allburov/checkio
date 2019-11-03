@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run completely-empty
-
-# https://py.checkio.org/mission/completely-empty/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run completely-empty
 
 # You need to figure if a wellfounded and wellsized iterable is completely empty.
 # 
@@ -18,6 +16,7 @@
 # 
 # 
 # END_DESC
+
 from collections.abc import Iterable
 
 

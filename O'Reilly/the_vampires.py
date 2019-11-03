@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run the-vampires
-
-# https://py.checkio.org/mission/the-vampires/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-vampires
 
 # 
 # END_DESC

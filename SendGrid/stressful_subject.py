@@ -1,11 +1,12 @@
-#!/usr/bin/env checkio --domain=py run stressful-subject
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run stressful-subject
 
-# https://py.checkio.org/mission/stressful-subject/
+# 
+# END_DESC
 
 import re
 
 #
-# END_DESC
+
 from itertools import groupby
 
 

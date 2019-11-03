@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run power-supply
-
-# https://py.checkio.org/mission/power-supply/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run power-supply
 
 # You are given the power grid and power-plant's information    (plant-number and supply-range). You should find out which cities blacked out.    A power plant can supply itself and connected cities with power, but the range is    limited.
 # 
@@ -14,6 +12,7 @@
 # 
 # 
 # END_DESC
+
 from collections import defaultdict
 
 

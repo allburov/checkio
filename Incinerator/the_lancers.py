@@ -1,6 +1,4 @@
-#!/usr/bin/env checkio --domain=py run the-lancers
-
-# https://py.checkio.org/mission/the-lancers/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run the-lancers
 
 # 
 # END_DESC

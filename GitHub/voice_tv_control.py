@@ -1,12 +1,10 @@
-#!/usr/bin/env checkio --domain=py run voice-tv-control
-
-# https://py.checkio.org/mission/voice-tv-control/
+#!/home/aburov/venvs/checkio-venv/bin/checkio --domain=py run voice-tv-control
 
 # The technologies are rapidly evolving - only 50 years ago a simple black-and-white TV was a luxury! And now even a cool big color TV with remote control is a common thing. Let's try to improve our TV and add the voice control to it! To begin with, we’ll write the simple prototype in Python. It’ll use the following commands:
 # 
 # first_channel()- turns on the first channel from the list.
 # last_channel()- turns on the last channel from the list.
-# _set_pos(N)- turns on the N channel. Pay attention that the channel numbers start from 1, not from 0.
+# turn_channel(N)- turns on the N channel. Pay attention that the channel numbers start from 1, not from 0.
 # next_channel()- turns on the next channel. If the current channel is the last one, turns on the first channel.
 # previous_channel()- turns on the previous channel. If the current channel is the first one, turns on the last channel.
 # current_channel()- returns the name of the current channel.
@@ -23,6 +21,7 @@
 # 
 # controller.first_channel() == "BBC"
 # controller.last_channel() == "TV1000"
+# controller.turn_channel(1) == "BBC"
 # controller.next_channel() == "Discovery"
 # controller.previous_channel() == "BBC"
 # controller.current_channel() == "BBC"
