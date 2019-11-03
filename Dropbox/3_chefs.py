@@ -40,22 +40,57 @@
 # 
 # 
 # END_DESC
+import abc
+from collections import defaultdict
+from functools import partialmethod, partial
+from typing import Dict, Callable
 
-class AbstractCook:
-    pass
+
+class AbstractCook(metaclass=abc.ABCMeta):
+
+    @property
+    @abc.abstractmethod
+    def _name_maps(self) -> Dict[str, str]:
+        pass
+
+    def __init__(self, ):
+        self._total = defaultdict(int)
+
+    def __add(self, type_, count, price):
+        self._total[type_] += count * price
+        self._total['total'] += count * price
+
+    add_food: Callable = partialmethod(__add, 'food')
+    add_drink: Callable = partialmethod(__add, 'drink')
+
+    def total(self):
+        order = ('food', 'drink', 'total')
+        return ", ".join(
+            f'{self._name_maps.get(x, x).title()}: {self._total[x]}'
+            for x in order
+        )
+
 
 class JapaneseCook(AbstractCook):
-    pass
+    @property
+    def _name_maps(self) -> Dict[str, str]:
+        return dict(food='sushi', drink='tea')
+
 
 class RussianCook(AbstractCook):
-    pass
+    @property
+    def _name_maps(self) -> Dict[str, str]:
+        return dict(food='dumplings', drink='compote')
+
 
 class ItalianCook(AbstractCook):
-    pass
+    @property
+    def _name_maps(self) -> Dict[str, str]:
+        return dict(food='pizza', drink='juice')
 
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+    # These "asserts" using only for self-checking and not necessary for auto-testing
 
     client_1 = JapaneseCook()
     client_1.add_food(2, 30)

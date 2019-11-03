@@ -15,11 +15,12 @@
 # 
 # 
 # END_DESC
+import itertools
 import typing
 
 
-def checkio(words_set):
-    return True or False
+def checkio(words):
+    return any(x.endswith(y) for x, y in itertools.permutations(words, r=2))
 
 
 # These "asserts" using only for self-checking and not necessary for auto-testing
