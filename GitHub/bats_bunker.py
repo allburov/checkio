@@ -34,11 +34,13 @@
 def checkio(bunker):
     return 0
 
-#These "asserts" using only for self-checking and not necessary for auto-testing
+
+# These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
     def almost_equal(checked, correct, significant_digits=2):
         precision = 0.1 ** significant_digits
         return correct - precision < checked < correct + precision
+
 
     assert almost_equal(checkio([
         "B--",
